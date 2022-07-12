@@ -1,30 +1,40 @@
 server:
-  port: 8090
-
+  port: 9099
+  servlet:
+    context-path: /
+    session:
+      timeout: 9000
+      
 spring:
   application:
     name: material-classification
   datasource:
-    name: mysqlDatasource
-    url: jdbc:mysql://127.0.0.1:3306/spring_security_oauth?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/material_classification?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=UTC&nullCatalogMeansCurrent=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    # \u76D1\u63A7\u7EDF\u8BA1\u62E6\u622A\u7684filters\uFF0C\u5982\u679C\u542F\u7528log4j\u8BB0\u5F97\u6DFB\u52A0\u4F9D\u8D56
-    filters: stat,wall
-  # activiti
+
   activiti:
-    #\u6BCF\u6B21\u5E94\u7528\u542F\u52A8\u4E0D\u68C0\u67E5Activiti\u6570\u636E\u8868\u662F\u5426\u5B58\u5728\u53CA\u7248\u672C\u53F7\u662F\u5426\u5339\u914D\uFF0C\u63D0\u5347\u5E94\u7528\u542F\u52A8\u901F\u5EA6
+    #1.flase：默认值。activiti在启动时，对比数据库表中保存的版本，如果没有表或者版本不匹配，将抛出异常
+    #2.true： activiti会对数据库中所有表进行更新操作。如果表不存在，则自动创建
+    #3.create_drop： 在activiti启动时创建表，在关闭时删除表（必须手动关闭引擎，才能删除表）
+    #4.drop-create： 在activiti启动时删除原来的旧表，然后在创建新表（不需要手动关闭引擎）
     database-schema-update: true
-    #\u5728\u9879\u76EE\u5355\u72EC\u4F5C\u4E3A\u4E00\u4E2A\u5F15\u64CE\uFF0C\u672C\u8EAB\u4E0D\u90E8\u7F72\u6D41\u7A0B\u7684\u65F6\u5019\uFF0C\u5982\u679Cresources\u76EE\u5F55\u6CA1\u6709\u201Cprocesses\u201D\u76EE\u5F55\uFF0C\u542F\u52A8\u9879\u76EE\u62A5\u9519\u2013\u627E\u4E0D\u5230processes\u76EE\u5F55\u3002\u9700\u8981\u5728\u914D\u7F6E\u6587\u4EF6\u4E2D\u6DFB\u52A0\u4EE5\u4E0B\u5185\u5BB9\uFF1A
+    #检测历史表是否存在 activiti7默认没有开启数据库历史记录 启动数据库历史记录
+    db-history-used: true
+    #记录历史等级 可配置的历史级别有none, activity, audit, full
+    #none：不保存任何的历史数据，因此，在流程执行过程中，这是最高效的。
+    #activity：级别高于none，保存流程实例与流程行为，其他数据不保存。
+    #audit：除activity级别会保存的数据外，还会保存全部的流程任务及其属性。audit为history的默认值。
+    #full：保存历史数据的最高级别，除了会保存audit级别的数据外，还会保存其他全部流程相关的细节数据，包括一些流程参数等。
+    history-level: full
+    #校验流程文件，默认校验resources下的processes文件夹里的流程文件
     check-process-definitions: false
     process-definition-location-prefix: classpath:/processes/
     process-definition-location-suffixes:
       -**.bpmn
       -**.bpmn20.xml
-    #\u4FDD\u5B58\u5386\u53F2\u6570\u636E\u7EA7\u522B\u8BBE\u7F6E\u4E3Afull\u6700\u9AD8\u7EA7\u522B\uFF0C\u4FBF\u4E8E\u5386\u53F2\u6570\u636E\u7684\u8FFD\u6EAF
-    history-level: full
   # activiti \u5B89\u5168\u8BBF\u95EE
   security:
     basic:
@@ -32,4 +42,8 @@ spring:
     user:
       name: root
       password: root
-      
+
+#日志的相关配置
+logging:
+  level:
+    root: info      
