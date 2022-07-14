@@ -29,13 +29,14 @@ public class DemoApplicationConfiguration {
 
 	@Bean
 	public UserDetailsService myUserDetailsService() {
+		/**
+		 * 往内存中设置有权限的角色和用户
+		 */
 		InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
 		// 这里添加用户，后面处理流程时用到的任务负责人，需要添加在这里
-		String[][] usersGroupsAndRoles = { { "jack", "password", "ROLE_ACTIVITI_USER", "GROUP_activitiTeam" },
-				{ "rose", "password", "ROLE_ACTIVITI_USER", "GROUP_activitiTeam" },
-				{ "tom", "password", "ROLE_ACTIVITI_USER", "GROUP_activitiTeam" },
-				{ "other", "password", "ROLE_ACTIVITI_USER", "GROUP_otherTeam" },
-				{ "system", "password", "ROLE_ACTIVITI_USER" }, { "admin", "password", "ROLE_ACTIVITI_ADMIN" }, };
+		String[][] usersGroupsAndRoles = { { "bobhe", "123456", "ROLE_ACTIVITI_USER", "GROUP_activitiTeam" },
+				{ "other", "123456", "ROLE_ACTIVITI_USER", "GROUP_otherTeam" },
+				{ "system", "123456", "ROLE_ACTIVITI_USER" }, { "admin", "123456", "ROLE_ACTIVITI_ADMIN" }, };
 
 		for (String[] user : usersGroupsAndRoles) {
 			List<String> authoritiesStrings = Arrays.asList(Arrays.copyOfRange(user, 2, user.length));
