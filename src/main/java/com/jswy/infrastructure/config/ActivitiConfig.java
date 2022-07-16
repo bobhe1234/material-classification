@@ -7,8 +7,10 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.activiti.api.runtime.shared.identity.UserGroupManager;
+import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.cfg.ProcessEngineConfigurator;
 import org.activiti.engine.impl.bpmn.parser.factory.DefaultActivityBehaviorFactory;
+import org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.activiti.engine.impl.persistence.StrongUuidGenerator;
 import org.activiti.spring.SpringAsyncExecutor;
 import org.activiti.spring.SpringProcessEngineConfiguration;
@@ -31,7 +33,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
- * 配置了两个数据源，默认数据源是master,这个可以作为业务数据源，工作流数据源为activiti
+ * 使用Java类完成配置文件 配置了两个数据源，默认数据源是master,这个可以作为业务数据源，工作流数据源为activiti
  * 
  * @author bobhe
  *
@@ -54,6 +56,20 @@ public class ActivitiConfig extends AbstractProcessEngineAutoConfiguration {
 		return DataSourceBuilder.create().build();
 	}
 
+	/**
+	 * 初始化配置，将创建28张表
+	 * 
+	 * @return
+	 */
+	@Bean
+	public StandaloneProcessEngineConfiguration processEngineConfiguration() {
+		StandaloneProcessEngineConfiguration configuration = new StandaloneProcessEngineConfiguration();
+		configuration.setDataSource(activitiDataSource());
+		configuration.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
+		configuration.setAsyncExecutorActivate(false);
+		return configuration;
+	}
+
 	@Bean
 	@Primary
 	public SpringProcessEngineConfiguration springProcessEngineConfiguration(
@@ -68,10 +84,10 @@ public class ActivitiConfig extends AbstractProcessEngineAutoConfiguration {
 		SpringProcessEngineConfiguration conf = new SpringProcessEngineConfiguration();
 		conf.setConfigurators(processEngineConfigurators);
 
-		Resource[] resources = null;
 		// 启动自动部署流程
 		try {
-			resources = new PathMatchingResourcePatternResolver().getResources("classpath*:processes/*.*.xml");
+			Resource[] resources = new PathMatchingResourcePatternResolver()
+					.getResources("classpath*:processes/*.*.xml");
 			System.out.println("------------------classpath*:processes/*.*.xml length:" + resources.length);
 			if (resources != null && resources.length > 0) {
 				conf.setDeploymentResources(resources);

@@ -34,7 +34,7 @@ public class DemoApplicationConfiguration {
 		 */
 		InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
 		// 这里添加用户，后面处理流程时用到的任务负责人，需要添加在这里
-		String[][] usersGroupsAndRoles = { { "bobhe", "123456", "ROLE_ACTIVITI_USER", "GROUP_activitiTeam" },
+		String[][] usersGroupsAndRoles = { { "root", "root", "ROLE_ACTIVITI_USER", "GROUP_activitiTeam" },
 				{ "other", "123456", "ROLE_ACTIVITI_USER", "GROUP_otherTeam" },
 				{ "system", "123456", "ROLE_ACTIVITI_USER" }, { "admin", "123456", "ROLE_ACTIVITI_ADMIN" }, };
 
