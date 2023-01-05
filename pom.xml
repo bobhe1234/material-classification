@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<modules>
+		<!-- Camunda 流程引擎模块 -->
+		<module>jswy-bpm</module>
+	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.12.RELEASE</version>
+		<version>2.3.7.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.jswy</groupId>
 	<artifactId>material-classification</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>material-classification</name>
+	<packaging>pom</packaging>
 	<description> Material classification and material coding management system</description>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -19,11 +28,16 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<java.version>1.8</java.version>
-		<!-- 7.1.0.M6为最后一个支持jdk8的版本，Activiti7集成了docker、microservices、kubernetes、activiti cloud、activiti cloud、cloud native、spring boot 2.0-->
-		<activiti.version>7.1.0.M6</activiti.version>
+		<!-- 7.1.0.M6为最后一个支持jdk8的版本 -->
+		<activiti.version>7.15.0</activiti.version>
 		<activiti.modeler.version>5.23.0</activiti.modeler.version>
 	</properties>
+
 	<dependencies>
+		<!--Spring boot start -->
+		<!-- 添加druid的依赖，并把之前的jpa依赖注释去掉，添加log4j的依赖，不加的话启动会报错，druid有用到它 <dependency> 
+			<groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-data-jpa</artifactId> 
+			</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -33,15 +47,30 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.2.8</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<!-- spring cache -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+		<!-- redis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<!--spring2.0集成redis所需common-pool2 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		<!--Spring boot end -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -52,62 +81,82 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- 实现activiti7与Springboot整合 启动项目成功后自动创建表 -->
+		<!-- camunda 启动项目成功后自动创建表 
 		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-spring-boot-starter</artifactId>
+			<groupId>org.camunda.bpm.springboot</groupId>
+			<artifactId>camunda-bpm-spring-boot-starter</artifactId>
 			<version>${activiti.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-json-converter</artifactId>
+			<groupId>org.camunda.bpm.springboot</groupId>
+			<artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
 			<version>${activiti.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-image-generator</artifactId>
+			<groupId>org.camunda.bpm.springboot</groupId>
+			<artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
 			<version>${activiti.version}</version>
+		</dependency>-->
+
+		<!-- RESTful APIs swagger2 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
 		</dependency>
 		<dependency>
-			<groupId>org.activiti.dependencies</groupId>
-			<artifactId>activiti-dependencies</artifactId>
-			<version>${activiti.version}</version>
-			<type>pom</type>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.activiti/activiti-engine -->
-		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-engine</artifactId>
-			<version>${activiti.version}</version>
-		</dependency>
-		<!-- activiti-modeler是网页流程设计器的包 不用Activiti7的，本人觉得Acticiti7目前没有自带的网页流程设计器，它是集成第三方的设计器，在页面设计上没有5.22.0美观 -->
-		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-spring-boot-starter-basic</artifactId>
-			<version>${activiti.modeler.version}</version>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>1.6.2</version>
 		</dependency>
 		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-diagram-rest</artifactId>
-			<version>${activiti.modeler.version}</version>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-models</artifactId>
+			<version>1.6.2</version>
 		</dependency>
 		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-modeler</artifactId>
-			<version>${activiti.modeler.version}</version>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>swagger-bootstrap-ui</artifactId>
+			<version>1.9.6</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>23.0</version>
+		</dependency>
+
+		<!--lombok插件 -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- druid数据源驱动 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.2.8</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+		<!--Mysql依赖包 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 		<!-- thymeleaf模板 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
-		<!-- class path resource [org/apache/commons/dbcp/BasicDataSource.class] cannot be opened because it does not exist -->
+		<!-- class path resource [org/apache/commons/dbcp/BasicDataSource.class] 
+			cannot be opened because it does not exist -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-dbcp2</artifactId>
@@ -156,101 +205,54 @@
 		</dependency>
 	</dependencies>
 
-	<build>
+	<!--多环境参数配置 -->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<profilesActive>dev</profilesActive>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<profilesActive>test</profilesActive>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<profilesActive>prod</profilesActive>
+			</properties>
+		</profile>
+	</profiles>
 
-		<resources>
-			<!-- maven扫描src/main/java这个文件夹，并且要扫描所有.xml和.properties文件 -->
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.*</include>
-					<include>**/*.properties</include>
-					<include>**/*.xml</include>
-					<include>**/*.yml</include>
-					<include>**/*.html</include>
-				</includes>
-				<filtering>false</filtering>
-			</resource>
-			<!-- 由于修改了默认的resource目录，导致src/main/resources的所有文件都不能被扫描，也就出现了applicationContext文件不能被扫描的错误，所以应该配置 -->
-			<resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>**/*.*</include>
-					<include>**/*.properties</include>
-					<include>**/*.xml</include>
-					<include>**/*.yml</include>
-					<include>**/*.html</include>
-				</includes>
-				<filtering>false</filtering>
-			</resource>
-		</resources>
-
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<!-- The forked VM terminated without saying properly g -->
-				<configuration>
-					<testsFailureIgnore>true</testsFailureIgnore>
-					<excludes>
-						<exclude>**/*MaterialClassificationApplicationTests.java</exclude>
-					</excludes>
-
-				</configuration>
-			</plugin>
+	<repositories>
+		<repository>
+			<id>public</id>
+			<name>aliyun nexus</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
 
 
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-tomcat</artifactId>
-				<version>2.1.12.RELEASE</version>
-			</plugin>
-			<!-- Spring Boot 打包插件，
-			   （如果子项目不是单独springboot项目不能独立启动，则父工程不能使用该插件，应该放在能启动的子项目中）
-			    子类没有main类会报错，所以注释掉-->
-			<!-- maven-compiler-plugin用来编译java代码-->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<verbose>true</verbose>
-					<fork>true</fork>
-					<executable>${JAVA_HOME}/bin/javac</executable>
-				</configuration>
-			</plugin>
-
-			<!-- maven-resources-plugin用来处理资源文件-->
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-resources-src</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/classes</outputDirectory>
-							<resources>
-								<resource>
-									<directory>src/main/java</directory>
-									<excludes>
-										<exclude>**/*.java</exclude>
-										<exclude>**/deleteme</exclude>
-									</excludes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-
+	<pluginRepositories>
+		<pluginRepository>
+			<id>public</id>
+			<name>aliyun nexus</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
