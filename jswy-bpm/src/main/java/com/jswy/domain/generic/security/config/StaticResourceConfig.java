@@ -17,6 +17,7 @@ public class StaticResourceConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		// 映射： static路径下的，为直接路径
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/")
 				.addResourceLocations("classpath:/application.yml");
 	}

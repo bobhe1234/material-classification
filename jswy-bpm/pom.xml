@@ -129,32 +129,18 @@
 			<artifactId>groovy-all</artifactId>
 			<version>2.4.13</version>
 		</dependency>
-
-		<!-- 服务注册
 		<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-			<version>2.1.4.RELEASE</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>29.0-jre</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-commons</artifactId>
-			<version>2.2.5.RELEASE</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-openfeign-core</artifactId>
-			<version>2.2.3.RELEASE</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-			<version>2.2.3.RELEASE</version>
-		</dependency> -->
+		<!-- 服务注册 <dependency> <groupId>com.alibaba.cloud</groupId> <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId> 
+			<version>2.1.4.RELEASE</version> </dependency> <dependency> <groupId>org.springframework.cloud</groupId> 
+			<artifactId>spring-cloud-commons</artifactId> <version>2.2.5.RELEASE</version> 
+			<scope>compile</scope> </dependency> <dependency> <groupId>org.springframework.cloud</groupId> 
+			<artifactId>spring-cloud-openfeign-core</artifactId> <version>2.2.3.RELEASE</version> 
+			</dependency> <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-openfeign</artifactId> 
+			<version>2.2.3.RELEASE</version> </dependency> -->
 
 		<dependency>
 			<groupId>io.github.openfeign</groupId>
@@ -229,31 +215,12 @@
 				</configuration>
 			</plugin>
 
-			<!-- maven-resources-plugin用来处理资源文件
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-resources-src</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/classes</outputDirectory>
-							<resources>
-								<resource>
-									<directory>src/main/java</directory>
-									<excludes>
-										<exclude>**/*.java</exclude>
-										<exclude>**/deleteme</exclude>
-									</excludes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin> -->
+			<!-- maven-resources-plugin用来处理资源文件 <plugin> <artifactId>maven-resources-plugin</artifactId> 
+				<executions> <execution> <id>copy-resources-src</id> <phase>validate</phase> 
+				<goals> <goal>copy-resources</goal> </goals> <configuration> <outputDirectory>${project.build.directory}/classes</outputDirectory> 
+				<resources> <resource> <directory>src/main/java</directory> <excludes> <exclude>**/*.java</exclude> 
+				<exclude>**/deleteme</exclude> </excludes> </resource> </resources> </configuration> 
+				</execution> </executions> </plugin> -->
 		</plugins>
 	</build>
 </project>

@@ -8,22 +8,41 @@ server:
 spring:
   application:
     name: material-classification
-  cloud:
-    nacos:
-      server-addr: localhost:80 #nacos地址
-      config:
-        file-extension: yml #文件后缀名
-  #配置数据库
+  #cloud:
+  #  nacos:
+  #    server-addr: localhost:80 #nacos地址
+  #    config:
+  #      file-extension: yml #文件后缀名
+        
+#配置数据库
   datasource:
     url: jdbc:mysql://localhost:3306/material_classification?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=UTC&nullCatalogMeansCurrent=true
-    #8.0=com.mysql.cj.jdbc.Driver
-    driver-Class-Name: com.mysql.jdbc.Driver
+    #com.mysql.jdbc.Driver
+    driver-Class-Name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
     password: root
     druid:
-      #初始化时池中建立的物理连接个数
+#初始化时池中建立的物理连接个数
       initialSize=10
+#   数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+#   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    
   mvc: 
     static-path-pattern: /static/**
   thymeleaf:
@@ -31,44 +50,58 @@ spring:
     encoding: utf-8
     check-template: false
     check-template-location: false
+    
   camunda:
     bpm:
-      # 配置账户密码来访问Camunda自带的管理界面
+# 配置账户密码来访问Camunda自带的管理界面
       admin-user:
         id: admin
         password: admin
         first-name: admin
       filter:
         create: All tasks
-      #指定数据库类型
-      #    database:
-      #      type: mysql
-      #禁止自动部署resources下面的bpmn文件
+#指定数据库类型
+#    database:
+#      type: mysql
+#禁止自动部署resources下面的bpmn文件
       auto-deployment-enabled: false
-      #禁止index跳转到Camunda自带的管理界面，默认true
-      #    webapp:
-      #      index-redirect-enabled: false
-    database-schema: material_classification
-    #1.flase：默认值。activiti在启动时，对比数据库表中保存的版本，如果没有表或者版本不匹配，将抛出异常
-    #2.true： activiti会对数据库中所有表进行更新操作。如果表不存在，则自动创建
-    #3.create_drop： 在activiti启动时创建表，在关闭时删除表（必须手动关闭引擎，才能删除表）
-    #4.drop-create： 在activiti启动时删除原来的旧表，然后在创建新表（不需要手动关闭引擎）
-    database-schema-update: true
-    #检测历史表是否存在 activiti7默认没有开启数据库历史记录 启动数据库历史记录
+#禁止index跳转到Camunda自带的管理界面，默认true
+#    webapp:
+#      index-redirect-enabled: false
+      
+    database:
+      schema: material_classification
+#1.flase：默认值。在启动时，对比数据库表中保存的版本，如果没有表或者版本不匹配，将抛出异常
+#2.true： 会对数据库中所有表进行更新操作。如果表不存在，则自动创建;且根据实体类型自动更新表结构，保留原始数据记录
+#3.create_drop： 在启动时创建表，在关闭时删除表（必须手动关闭引擎，才能删除表）
+#4.drop-create： 在启动时删除原来的旧表，然后在创建新表（不需要手动关闭引擎）
+      schema-update: true
+    webapp:
+      enabled: true
+    job-execution:
+#作业执行器-定时任务
+      enabled: true
+      #id生成器 UUID
+    id-generator: strong
+#检测历史表是否存在 activiti7默认没有开启数据库历史记录 启动数据库历史记录
     db-history-used: true
-    #记录历史等级 可配置的历史级别有none, activity, audit, full
-    #none：不保存任何的历史数据，因此，在流程执行过程中，这是最高效的。
-    #activity：级别高于none，保存流程实例与流程行为，其他数据不保存。
-    #audit：除activity级别会保存的数据外，还会保存全部的流程任务及其属性。audit为history的默认值。
-    #full：保存历史数据的最高级别，除了会保存audit级别的数据外，还会保存其他全部流程相关的细节数据，包括一些流程参数等。
+#记录历史等级 可配置的历史级别有none, activity, audit, full
+#none：不保存任何的历史数据，因此，在流程执行过程中，这是最高效的。
+#activity：级别高于none，保存流程实例与流程行为，其他数据不保存。
+#audit：除activity级别会保存的数据外，还会保存全部的流程任务及其属性。audit为history的默认值。
+#full：保存历史数据的最高级别，除了会保存audit级别的数据外，还会保存其他全部流程相关的细节数据，包括一些流程参数等。
     history-level: full
-    #校验流程文件，默认校验resources下的processes文件夹里的流程文件
+#校验流程文件，默认校验resources下的processes文件夹里的流程文件
     check-process-definitions: false
     process-definition-location-prefix: classpath:/processes/
     process-definition-location-suffixes:
       -**.bpmn
       -**.bpmn20.xml
-  # activiti \u5B89\u5168\u8BBF\u95EE
+      
+  jpa.show-sql = true
+#控制器输入更美观的json字符串
+  jackson.serialization.indent_output=true
+# activiti \u5B89\u5168\u8BBF\u95EE
   security:
     basic:
       enabled: false
@@ -79,4 +112,6 @@ spring:
 #日志的相关配置
 logging:
   level:
-    root: info      
+    root: info
+#debug可打印执行sql
+    org.camunda: debug 

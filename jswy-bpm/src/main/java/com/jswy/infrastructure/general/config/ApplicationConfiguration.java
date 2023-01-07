@@ -1,4 +1,4 @@
-package com.jswy.infrastructure.config;
+package com.jswy.infrastructure.general.config;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,8 +24,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
  *
  */
 @Configuration
-public class DemoApplicationConfiguration {
-	private Logger logger = LoggerFactory.getLogger(DemoApplicationConfiguration.class);
+public class ApplicationConfiguration {
+	private Logger logger = LoggerFactory.getLogger(ApplicationConfiguration.class);
 
 	@Bean
 	public UserDetailsService myUserDetailsService() {

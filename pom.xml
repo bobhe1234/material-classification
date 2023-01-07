@@ -35,9 +35,11 @@
 
 	<dependencies>
 		<!--Spring boot start -->
-		<!-- 添加druid的依赖，并把之前的jpa依赖注释去掉，添加log4j的依赖，不加的话启动会报错，druid有用到它 <dependency> 
-			<groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-data-jpa</artifactId> 
-			</dependency> -->
+		<!-- 添加druid的依赖，并把之前的jpa依赖注释去掉，添加log4j的依赖，不加的话启动会报错，druid有用到它 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -81,22 +83,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- camunda 启动项目成功后自动创建表 
-		<dependency>
-			<groupId>org.camunda.bpm.springboot</groupId>
-			<artifactId>camunda-bpm-spring-boot-starter</artifactId>
-			<version>${activiti.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.camunda.bpm.springboot</groupId>
-			<artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
-			<version>${activiti.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.camunda.bpm.springboot</groupId>
-			<artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
-			<version>${activiti.version}</version>
-		</dependency>-->
+		<!-- camunda 启动项目成功后自动创建表 <dependency> <groupId>org.camunda.bpm.springboot</groupId> 
+			<artifactId>camunda-bpm-spring-boot-starter</artifactId> <version>${activiti.version}</version> 
+			</dependency> <dependency> <groupId>org.camunda.bpm.springboot</groupId> 
+			<artifactId>camunda-bpm-spring-boot-starter-rest</artifactId> <version>${activiti.version}</version> 
+			</dependency> <dependency> <groupId>org.camunda.bpm.springboot</groupId> 
+			<artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId> <version>${activiti.version}</version> 
+			</dependency> -->
 
 		<!-- RESTful APIs swagger2 -->
 		<dependency>
@@ -240,7 +233,6 @@
 			</releases>
 		</repository>
 	</repositories>
-
 
 	<pluginRepositories>
 		<pluginRepository>
