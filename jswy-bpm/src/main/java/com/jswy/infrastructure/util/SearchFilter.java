@@ -1,4 +1,4 @@
-package com.jswy.infrastructure.general.util;
+package com.jswy.infrastructure.util;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

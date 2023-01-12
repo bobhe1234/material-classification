@@ -36,8 +36,8 @@ public class TradeRecord implements AggregateRoot<TradeRecordId> {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "traderecord_id")
-	@GenericGenerator(name = "traderecord_id", strategy = "com.muyuer.springdemo.core.TradeRecordIDGenerator")
-	@Column(name = "traderecord_id", unique = true)
+	@GenericGenerator(name = "trade_id", strategy = "com.muyuer.springdemo.core.TradeRecordIDGenerator")
+	@Column(name = "trade_id", unique = true)
 	private String tradeId;
 
 	/**

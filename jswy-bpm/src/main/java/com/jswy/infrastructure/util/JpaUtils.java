@@ -1,4 +1,4 @@
-package com.jswy.infrastructure.general.util;
+package com.jswy.infrastructure.util;
 
 import java.math.BigDecimal;
 import java.sql.Date;

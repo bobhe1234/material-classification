@@ -1,4 +1,4 @@
-package com.jswy.infrastructure.general.config;
+package com.jswy.infrastructure.config;
 
 import java.util.Arrays;
 import java.util.List;

@@ -4,14 +4,19 @@ import javax.sql.DataSource;
 
 import org.apache.catalina.Context;
 import org.apache.tomcat.util.scan.StandardJarScanner;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.alibaba.druid.pool.DruidDataSource;
+
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * exclude=securityAutoConfiguration
@@ -22,12 +27,20 @@ import com.alibaba.druid.pool.DruidDataSource;
  *
  */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@EntityScan(basePackages = "com.jswy.domain.generic.demo.model") // 扫描的Entity文件路径
+@MapperScan(basePackages = "com.jswy.domain.generic.demo.mapper") // 扫描的mapper文件路径
+@EnableSwagger2 // 开启Swagger API
 public class MaterialClassificationApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MaterialClassificationApplication.class, args);
 	}
 
+	/**
+	 * 注册数据源bean
+	 * 
+	 * @return
+	 */
 	@Bean
 	@ConfigurationProperties(prefix = "spring.datasource")
 	public DataSource dateSource() {

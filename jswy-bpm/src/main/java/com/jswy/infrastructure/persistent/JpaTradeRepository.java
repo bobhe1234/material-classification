@@ -1,4 +1,4 @@
-package com.jswy.infrastructure.jpa;
+package com.jswy.infrastructure.persistent;
 
 import java.io.Serializable;
 import java.util.List;

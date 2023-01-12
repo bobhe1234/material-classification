@@ -26,6 +26,6 @@ public class TradeEventProcessor {
 
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, condition = "# tradeEvent.tradeStatus.name() == 'SUCCEED'")
 	public void TradeSucceed(TradeEvent tradeEvent) {
-		tradeRepository.sendMQEvent(tradeEvent);
+//		tradeRepository.sendMQEvent(tradeEvent);
 	}
 }

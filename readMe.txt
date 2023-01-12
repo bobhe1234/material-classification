@@ -60,21 +60,15 @@ CQRS和DDD
     │   │               │       ├── CustomerRepository.java
     │   │               │       └── TradeRepository.java
     │   │               └── infrastructure  基础设施层
-    │   │                   ├── converter   实体转换器
-    │   │                   ├── persistent  持久化机制
-    │   │                   │   ├── po      持久化对象,数据库orm数据对象
-    │   │                   │   ├── mapper  映射，mybatis mapper接口
-    │   │                   │   └── repository  仓储类，持久化接口实现，映射ORM
-    │   │                   │    	├─impl     仓库实现
-    │   │                   │	 	├── TradeRepositoryImpl.java
-    │   │                   │	 	├── WalletRepositoryImpl.java
-    │   │                   ├── ack     实体转换器
-    │   │                   ├── mq            mq消息
-    │   │                   ├── cache         缓存
-    │   │                   ├── general     通用技术支持，向其他层输出通用服务
-    │   │                   │   ├── config  配置类
-    │   │                   │   └── common  基础公共模块
-    │   │                   │   └── util 	工具类
+    │   │                   ├── listener   实体转换器
+    │   │                   ├── model       持久化机制
+    │   │                   ├── mapper      映射，mybatis mapper接口
+    │   │                   ├── impl        仓库实现，持久化接口实现，映射ORM
+    │   │                   │   ├── TradeRepositoryImpl.java
+    │   │                   │   ├── WalletRepositoryImpl.java
+    │   │                   ├── config      配置类
+    │   │                   ├── exception 	工具类
+    │   │                   ├── util 	       工具类
     │   │                   ├── cache		缓存
     │   │                   │   └── Redis.java
     │   │                   ├── client		客户端
