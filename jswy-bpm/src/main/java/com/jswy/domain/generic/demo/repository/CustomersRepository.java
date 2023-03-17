@@ -4,27 +4,22 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.jswy.domain.generic.demo.model.Customer;
-import com.jswy.domain.generic.demo.model.CustomerId;
 import com.jswy.domain.support.AssociationResolver;
 import com.jswy.domain.support.IRepository;
 
 /**
- * JPA默认继承：Customers式一个标准的Spring Data仓储，我们可以轻松地通过其存储库显式地解决与其他聚合的关联<br>
- * 声明定制共享行为的接口，用 @NoRepositoryBean<br>
- * 因为要公用，必须通用，不能失去JPA默认方法，所以继承相关Repository类<br>
- * 基础设施接口放在领域层主要的目的是减少领域层对基础设施层的依赖 <br>
- * 接口的设计是不可暴露实现的技术细节，如不能将拼装的SQL作为参数
+ * 采用DDD聚合根的底层设计框架,默认继承相关Repository类通用JPA：<br>
+ * Customers式一个标准的Spring Data仓储，我们可以轻松地通过其存储库显式地解决与其他聚合的关联<br>
  * 
  * @author admin
  *
  */
-@NoRepositoryBean
-public interface CustomersRepository
-		extends IRepository<Customer, CustomerId>, AssociationResolver<Customer, CustomerId> {
+@Repository
+public interface CustomersRepository extends IRepository<Customer, Integer>, AssociationResolver<Customer, Integer> {
 
 	/**
 	 * 在方法上标注@Query来指定本地查询，@query 注解指定nativeQuery=true可用原生sql查询
@@ -44,9 +39,11 @@ public interface CustomersRepository
 	 * 
 	 * @param id
 	 * @param updateName
+	 * @return 
 	 * @return
 	 */
 	@Modifying
-	@Query("UPDATE Person p SET p.name = :name WHERE p.id < :id")
-	List<Customer> updatePersonById(@Param("id") Integer id, @Param("name") String updateName);
+	@Query(value = "update Customer p set p.name = :name where p.id = :id")
+	void updateNameById(@Param("id") Integer id, @Param("name") String updateName);
+
 }

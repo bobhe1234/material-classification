@@ -61,7 +61,8 @@ public interface UserMapper {
 	List<User> getAll();
 
 	/**
-	 * 自定义添加通过用户名称模糊查找用户信息,该实现依赖SQL（配置在user-Mapper.xml中）
+	 * 自定义添加通过用户名称模糊查找用户信息,该实现依赖SQL<br>
+	 * （通过yml的apperLocations: classpath:mapper/*.xml路径映射,实际配置在user-Mapper.xml中）
 	 * 
 	 * @param name
 	 * @return

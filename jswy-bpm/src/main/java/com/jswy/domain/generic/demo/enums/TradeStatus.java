@@ -1,5 +1,5 @@
 package com.jswy.domain.generic.demo.enums;
 
-public class TradeStatus {
-
+public enum TradeStatus {
+	SUCCESS, FAILED, DRAFT
 }

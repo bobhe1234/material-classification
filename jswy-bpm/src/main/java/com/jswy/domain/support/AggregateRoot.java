@@ -1,5 +1,7 @@
 package com.jswy.domain.support;
 
+import java.io.Serializable;
+
 /**
  * 聚合根接口
  * 
@@ -8,5 +10,5 @@ package com.jswy.domain.support;
  * @param <T>
  * @param <ID>
  */
-public interface AggregateRoot<ID extends Identifier> extends Entity<ID> {
+public interface AggregateRoot<ID extends /*Identifier*/Serializable> extends Entity<ID> {
 }

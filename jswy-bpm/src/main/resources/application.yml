@@ -103,9 +103,12 @@ spring:
   # 配置JPA
   jpa:
     database: MYSQL
-    show-sql: true #显示后台处理的SQL语句
+    #显示后台处理的SQL语句
+    show-sql: true
     hibernate:
-      ddl-auto: update #自动检查实体和数据库表是否一致，如果不一致则会进行更新数据库表
+      #自动检查实体和数据库表是否一致，如果不一致则会进行更新数据库表
+      ddl-auto: update
+      dialect: 
       #控制器输入更美观的json字符串
     jackson.serialization.indent_output: true
   # activiti
@@ -116,12 +119,15 @@ spring:
       name: root
       password: root
 
+# 指定存储引擎和字符集编码
+spring.jpa.properties.hibernate.dialect: com.jswy.domain.support.MysqlConfig
+
 #MyBatis扫描mapper文件配置
 mybatis:
   #配置包别名
   typeAliasesPackage: com.jswy.domain.demo.model
   #配置mapper扫描，找到mapper.xml映射文件
-  mapperLocations: classpath*:mapper/*.xml
+  mapperLocations: classpath:mapper/*.xml
   configuration:
     #下划线转驼峰命名法
     map-underscore-to-camel-case: true
@@ -134,5 +140,8 @@ swagger.terms-of-service-url: com.jswy.*.controller
 logging:
   level:
     root: info
+    #controller目录下所有输出为debug模式
+    com.jswy.interfaces.controller: debug
+    com.jswy.application.service: debug
 #debug可打印执行sql
     org.camunda: debug 

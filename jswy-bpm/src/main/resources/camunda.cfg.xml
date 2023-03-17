@@ -12,7 +12,7 @@
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName"
-			value="com.mysql.jdbc.Driver" />
+			value="om.mysql.cj.jdbc.Driver" />
 		<property name="url"
 			value="jdbc:mysql://localhost:3306/material_classification?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;serverTimezone=UTC&amp;nullCatalogMeansCurrent=true" />
 		<property name="username" value="root" />
@@ -20,6 +20,7 @@
 		<property name="maxActive" value="3" />
 		<property name="maxIdle" value="1" />
 	</bean>
+	
 	<!-- 工作流引擎配置bean -->
 	<bean id="processEngineConfiguration"
 		class="org.camunda.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration">
@@ -27,8 +28,8 @@
 		<property name="dataSource" ref="dataSource" />
 		<!-- 使用spring事务管理器 -->
 		<property name="transactionManager" ref="transactionManager" />
-		<!-- 数据库策略 -->
-		<property name="databaseSchemaUpdate" value="drop-create" />
+		<!-- 数据库策略 drop-creat -->
+		<property name="databaseSchemaUpdate" value="true" />
 	</bean>
 	<!-- 流程引擎 -->
 	<bean id="processEngine"

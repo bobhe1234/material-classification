@@ -1,5 +1,7 @@
 package com.jswy.domain.support;
 
+import java.io.Serializable;
+
 /**
  * 实体类接口：Entity是一个可识别的概念，自带序列ID，这意味着它需要公开其标识符
  * 
@@ -8,5 +10,5 @@ package com.jswy.domain.support;
  * @param <T>
  * @param <ID>
  */
-public interface Entity<ID extends Identifier> extends Identifiable<ID> {
+public interface Entity<ID extends /*Identifier*/Serializable> extends Identifiable<ID> {
 }

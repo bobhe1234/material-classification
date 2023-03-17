@@ -12,11 +12,10 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.alibaba.druid.pool.DruidDataSource;
-
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import com.jswy.domain.support.IRepositoryImpl;
 
 /**
  * exclude=securityAutoConfiguration
@@ -27,9 +26,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  *
  */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@EnableJpaRepositories(repositoryBaseClass = IRepositoryImpl.class) // 配置MyRepoImpl类为其他接口动态代理的实现基类
 @EntityScan(basePackages = "com.jswy.domain.generic.demo.model") // 扫描的Entity文件路径
 @MapperScan(basePackages = "com.jswy.domain.generic.demo.mapper") // 扫描的mapper文件路径
-@EnableSwagger2 // 开启Swagger API
+//@ComponentScan(value = "com.jswy.infrastructure.impl") // 扫描 会导致无法登录?
 public class MaterialClassificationApplication {
 
 	public static void main(String[] args) {

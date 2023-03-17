@@ -1,5 +1,6 @@
 package com.jswy.domain.support;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 /**
@@ -10,6 +11,6 @@ import java.util.Optional;
  * @param <T>
  * @param <ID>
  */
-public interface AggregateLookup<T extends AggregateRoot<ID>, ID extends Identifier> {
+public interface AggregateLookup<T extends AggregateRoot<ID>, ID extends /*Identifier*/Serializable> {
 	Optional<T> findById(ID id);
 }

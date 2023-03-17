@@ -17,23 +17,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMVCConfig implements WebMvcConfigurer {
 
 	/**
-	 * 其中addResourceHandler指向映射路径，addResourceLocations指向资源文件路径
+	 * 放行、映射资源：其中addResourceHandler指向映射路径，addResourceLocations指向资源文件路径
 	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// 放行资源：映射static路径下的静态资源为直接路径（camunda表单配置需要）
-		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");// 映射static路径下的静态资源为直接路径（camunda表单配置需要）
+		registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");// 映射templates模板动态资源路径
 
-		// 放行资源：映射templates模板动态资源路径
-		registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
-		registry.addResourceHandler("/mapper/**").addResourceLocations("classpath:/mapper/");
-
-		// 放行资源：加入camunda.cfg.xml配置资源，否则会报错找不到‘processEngineConfiguration’
-		registry.addResourceHandler("/**").addResourceLocations("classpath:/camunda.cfg.xml");
+		registry.addResourceHandler("camunda.cfg.xml").addResourceLocations("classpath:/");// 加入camunda.cfg.xml配置资源，否则找不到‘processEngineConfiguration’
 //		 registry.addResourceHandler("/**").addResourceLocations("classpath:/application.yml");
 
-		// 添加对swagger资源的放行
-		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");// 添加对swagger资源的放行
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
 

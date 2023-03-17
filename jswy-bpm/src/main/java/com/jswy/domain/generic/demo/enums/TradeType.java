@@ -1,5 +1,5 @@
 package com.jswy.domain.generic.demo.enums;
 
-public class TradeType {
-
+public enum TradeType {
+	E, D, O
 }

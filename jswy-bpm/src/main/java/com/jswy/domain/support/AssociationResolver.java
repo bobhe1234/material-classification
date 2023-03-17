@@ -1,5 +1,6 @@
 package com.jswy.domain.support;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Optional;
  * @param <T>
  * @param <ID>
  */
-public interface AssociationResolver<T extends AggregateRoot<ID>, ID extends Identifier>
+public interface AssociationResolver<T extends AggregateRoot<ID>, ID extends /* Identifier */Serializable>
 		extends AggregateLookup<T, ID> {
 
 	default Optional<T> resolve(Association<T, ID> association) {

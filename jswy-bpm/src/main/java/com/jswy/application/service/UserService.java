@@ -3,11 +3,15 @@ package com.jswy.application.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jswy.domain.generic.demo.mapper.UserMapper;
 import com.jswy.domain.generic.demo.model.User;
 import com.jswy.domain.generic.demo.repository.UserRepository;
+import com.jswy.domain.generic.demo.specification.UserSpecifications;
 
 /**
  * 应用层服务类：调用Spring Data JPA和Mybatis接口进行业务处理
@@ -45,7 +49,7 @@ public class UserService {
 	 * @return
 	 */
 	public User saveUser(User user) {
-		return userRepository.save(user);
+		return userRepository.saveAndFlush(user);
 	}
 
 	/**
@@ -65,6 +69,22 @@ public class UserService {
 	 */
 	public User findUser(Long id) {
 		return userRepository.findById(id).get();
+	}
+
+	/**
+	 * 查找用户（JPA实现,定制对应UserSpecification规格,实现复杂查询）
+	 * 
+	 * @param page
+	 * @param size
+	 * @param sex
+	 * @param ageBegin
+	 * @param ageEnd
+	 * @return
+	 */
+	public Page<User> findBy(Integer page, Integer size, String sex, Integer ageBegin, Integer ageEnd) {
+		Pageable pageable = PageRequest.of(page, size);
+		return userRepository.findAll(new UserSpecifications(sex, ageBegin, ageEnd), pageable);
+
 	}
 
 	/**
