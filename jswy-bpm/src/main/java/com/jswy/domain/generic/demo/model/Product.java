@@ -73,6 +73,10 @@ public class Product implements AggregateRoot<ProductMaster> {
 	@Column(name = "allow_across_category", length = 1, nullable = false)
 	private Boolean allowAcrossCategory;
 
+	public Product() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Product(Integer id, ProductMaster product_master, BigDecimal price, Integer categoryId,
 			Integer productStatus, String remark, Boolean allowAcrossCategory) {
 		this.id = id;
