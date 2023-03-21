@@ -1,7 +1,5 @@
 package com.jswy.domain.generic.demo.model;
 
-import java.sql.Timestamp;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -14,8 +12,6 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
-import com.jswy.domain.support.Domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -37,15 +33,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @SQLDelete(sql = "update aggrement set deleted=true where id=?")
 @Where(clause = "deleted=false")
-public class User extends Domain {
-
-	public User(Long id, Timestamp create_date, Timestamp modify_date, String creator, String modifer,
-			boolean deleted, Map<String, String> extended) {
-		super(id, create_date, modify_date, creator, modifer, deleted, extended);
-	}
-
-	public User() {
-	}
+public class User {
 
 	private static final long serialVersionUID = 4904258009554596176L;
 	@Id

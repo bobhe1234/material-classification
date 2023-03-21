@@ -3,7 +3,6 @@ package com.jswy.interfaces.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -12,9 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,10 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jswy.application.service.UserService;
 import com.jswy.domain.generic.demo.model.User;
-import com.jswy.domain.generic.demo.repository.UserRepository;
-import com.jswy.interfaces.assembler.DataResponse;
-import com.jswy.interfaces.assembler.UserAssembler;
-import com.jswy.interfaces.assembler.UserDto;
 
 import io.swagger.annotations.Api;
 
@@ -152,50 +145,6 @@ public class UserController {
 		map.put("num", list.size());
 		map.put("listData", list);
 		return map;
-	}
-
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private UserAssembler userAssembler;
-
-	/**
-	 * 保存用户: 可以根据UserDto扩展属性
-	 * 
-	 * @param user
-	 * @param errors
-	 * @param model
-	 * @return
-	 */
-	@PostMapping("create")
-	public DataResponse<User> createUser(@RequestBody UserDto dto) {
-		User user = userRepository.saveAndFlush(userAssembler.create(dto));
-		System.out.println(user.toString());
-		return new DataResponse<User>(user);
-	}
-
-	/**
-	 * 
-	 * @param id
-	 * @param dto
-	 * @return
-	 * @throws Exception
-	 */
-	@PostMapping("/{id}")
-	public DataResponse<User> updateUser(@PathVariable String id, @RequestBody UserDto dto) throws Exception {
-		DataResponse reps = new DataResponse();
-		Optional<User> optional = userRepository.findById(Long.parseLong(id));
-		// 查询数据是否不存在
-		if (!optional.isPresent()) {
-			throw new Exception("User is not exist!");
-		}
-
-		User user = optional.get();
-		if (userAssembler.update(user, dto)) {
-			User user1 = userRepository.saveAndFlush(userAssembler.create(dto));
-			return new DataResponse<User>(user1);
-		}
-		return new DataResponse(500, "update failed!");
 	}
 
 }
