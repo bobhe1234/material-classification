@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.jswy.domain.generic.demo.model.Customer;
-import com.jswy.domain.support.AssociationResolver;
 import com.jswy.domain.support.IRepository;
 
 /**
@@ -19,7 +18,8 @@ import com.jswy.domain.support.IRepository;
  *
  */
 @Repository
-public interface CustomersRepository extends IRepository<Customer, Integer>, AssociationResolver<Customer, Integer> {
+public interface CustomersRepository
+		extends IRepository<Customer, Integer>/* , AssociationResolver<Customer, Integer> */{
 
 	/**
 	 * 在方法上标注@Query来指定本地查询，@query 注解指定nativeQuery=true可用原生sql查询

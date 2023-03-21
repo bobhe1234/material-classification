@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jswy.domain.generic.demo.model.Customer;
-import com.jswy.domain.generic.demo.model.CustomerId;
 
 public class CustomerDTO {
 	private Integer id;
-	private CustomerId customer_id;
 	private String name;
 	private String phone;
 	private String email;
@@ -18,7 +16,6 @@ public class CustomerDTO {
 	public Customer toEntity() throws Exception {
 		Customer customer = new Customer();
 		customer.setId(getId());
-		customer.setCustomer_id(getCustomer_id());
 
 		customer.setName(name);
 		customer.setPhone(phone);
@@ -46,20 +43,6 @@ public class CustomerDTO {
 			dtoList.add(toDto(customer));
 		}
 		return dtoList;
-	}
-
-	/**
-	 * @return the customer_id
-	 */
-	public CustomerId getCustomer_id() {
-		return customer_id;
-	}
-
-	/**
-	 * @param customer_id the customer_id to set
-	 */
-	public void setCustomer_id(CustomerId customer_id) {
-		this.customer_id = customer_id;
 	}
 
 	public Integer getId() {

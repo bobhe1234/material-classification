@@ -15,8 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.jswy.domain.support.AggregateRoot;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +27,7 @@ import lombok.Setter;
 @Table(name = "t_product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Product implements AggregateRoot<ProductMaster> {
+public class Product /* implements AggregateRoot<ProductMaster> */ {
 	/**
 	 * JPA提供的四种标准用法为TABLE,SEQUENCE,IDENTITY,AUTO<br>
 	 * 1.​IDENTITY:主键由数据库自动生成（主要是自动增长型）,Mysql支持
@@ -43,10 +41,6 @@ public class Product implements AggregateRoot<ProductMaster> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
 	private Integer id;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "product_master", nullable = false)
-	private ProductMaster product_master;
 
 	@Column(name = "create_time", length = 11, columnDefinition = "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP")
 	private Timestamp create_time = new Timestamp(System.currentTimeMillis());
@@ -162,12 +156,38 @@ public class Product implements AggregateRoot<ProductMaster> {
 		this.id = id;
 	}
 
-	public void setId(ProductMaster product_master) {
-		this.product_master = product_master;
+	/**
+	 * @return the creator
+	 */
+	public String getCreator() {
+		return creator;
 	}
 
-	@Override
-	public ProductMaster getId() {
-		return this.product_master;
+	/**
+	 * @param creator the creator to set
+	 */
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+
+	/**
+	 * @return the modifer
+	 */
+	public String getModifer() {
+		return modifer;
+	}
+
+	/**
+	 * @param modifer the modifer to set
+	 */
+	public void setModifer(String modifer) {
+		this.modifer = modifer;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
 	}
 }

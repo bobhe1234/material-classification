@@ -23,7 +23,7 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @param <ID>
  */
 @NoRepositoryBean // <1>注释告诉Spring Data不要尝试直接实例化该接口
-public interface IRepository<T extends AggregateRoot<ID>, ID extends /* Identifier */Serializable> // <2>将存储库服务的实体限制为仅聚合根
+public interface IRepository<T /* extends AggregateRoot<ID> */, ID extends /* Identifier */Serializable> // <2>将存储库服务的实体限制为仅聚合根
 		extends JpaRepository<T, ID>, // <3>扩展JpaRepository (本身继承PagingAndSortingRepository，扩展具备分页和排序的能力)
 		JpaSpecificationExecutor<T> { // <4>个人更喜欢规范而不是查询方法,主要提供了多条件查询的支持，并且可以在查询中添加分页和排序
 }

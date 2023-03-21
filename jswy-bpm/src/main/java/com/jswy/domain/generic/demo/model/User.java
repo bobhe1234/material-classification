@@ -29,8 +29,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "t_user")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @SQLDelete(sql = "update aggrement set deleted=true where id=?")
 @Where(clause = "deleted=false")
 public class User {

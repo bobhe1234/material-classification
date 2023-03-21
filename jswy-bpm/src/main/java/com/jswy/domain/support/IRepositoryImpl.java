@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
  * @author admin
  *
  */
-public class IRepositoryImpl<T extends AggregateRoot<ID>, ID extends /*Identifier*/Serializable> extends SimpleJpaRepository<T, ID>
+public class IRepositoryImpl<T /* extends AggregateRoot<ID> */, ID extends /*Identifier*/Serializable> extends SimpleJpaRepository<T, ID>
 		implements IRepository<T, ID> {
 
 	// 通过构造方法注入 EntityManager 实例

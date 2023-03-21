@@ -20,7 +20,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.jswy.domain.support.AggregateRoot;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -28,9 +27,9 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "t_customer")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Customer implements AggregateRoot<Integer> {
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
+public class Customer /* implements AggregateRoot<Integer> */ {
 
 	/**
 	 * JPA提供的四种标准用法为TABLE,SEQUENCE,IDENTITY,AUTO<br>
@@ -48,10 +47,6 @@ public class Customer implements AggregateRoot<Integer> {
 	@SequenceGenerator(name = "id", sequenceName = "t_customer_seq", allocationSize = 1)
 	private Integer id;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "customer_id", nullable = false)
-	private CustomerId customer_id;
-
 	@Column(name = "name")
 	private String name;
 
@@ -65,8 +60,8 @@ public class Customer implements AggregateRoot<Integer> {
 	@Column(name = "create_time", length = 11, nullable = false, updatable = false)
 	@JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp create_time = new Timestamp(System.currentTimeMillis());
-	
-	@LastModifiedDate//开启了审计功能 创建时间和更新时间会自动设置并插入数据库
+
+	@LastModifiedDate // 开启了审计功能 创建时间和更新时间会自动设置并插入数据库
 	@Column(name = "modify_time", length = 11, nullable = false, updatable = true)
 	@JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp modify_time = new Timestamp(System.currentTimeMillis());
@@ -148,27 +143,16 @@ public class Customer implements AggregateRoot<Integer> {
 		this.id = id;
 	}
 
-	public CustomerId getCustomer_id() {
-		return customer_id;
-	}
-
-	public void setCustomer_id(CustomerId customer_id) {
-		this.customer_id = customer_id;
-	}
-
-	@Override
-	public String toString() {
-		return "id=" + this.id + ",customer_id=" + this.customer_id + ",name=" + this.name + ",phone=" + this.phone;
-	}
-
-	@Override
+	/**
+	 * @return the id
+	 */
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(create_time, customer_id, email, id, name, phone);
+		return Objects.hash(create_time, description, email, id, is_delete, modify_time, name, phone);
 	}
 
 	@Override
@@ -178,8 +162,10 @@ public class Customer implements AggregateRoot<Integer> {
 		if (!(obj instanceof Customer))
 			return false;
 		Customer other = (Customer) obj;
-		return Objects.equals(create_time, other.create_time) && Objects.equals(customer_id, other.customer_id)
-				&& Objects.equals(email, other.email) && Objects.equals(id, other.id)
-				&& Objects.equals(name, other.name) && Objects.equals(phone, other.phone);
+		return Objects.equals(create_time, other.create_time) && Objects.equals(description, other.description)
+				&& Objects.equals(email, other.email) && Objects.equals(id, other.id) && is_delete == other.is_delete
+				&& Objects.equals(modify_time, other.modify_time) && Objects.equals(name, other.name)
+				&& Objects.equals(phone, other.phone);
 	}
+
 }

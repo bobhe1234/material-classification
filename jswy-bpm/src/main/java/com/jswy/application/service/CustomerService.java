@@ -59,10 +59,6 @@ public class CustomerService {
 		temp_Customer.setPhone(input_Customer.getPhone());
 		temp_Customer.setEmail(input_Customer.getEmail());
 		temp_Customer.setDescription(input_Customer.getDescription());
-		if (!cusomterRepo.existsById(input_Customer.getId())) {
-			CustomerId customer_id = new CustomerId(input_Customer.getId());
-			temp_Customer.setCustomer_id(customer_id);
-		}
 		LOGGER.debug("saveOrUpdate End->Customer:" + temp_Customer);
 		// saveAndFlush存储内存且同步到数据库(save高并发下因延迟导致数据误差)
 		cusomterRepo.saveAndFlush(temp_Customer);
