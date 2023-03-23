@@ -5,7 +5,7 @@ ENV APP_NAME=material-classification
 ENV WORK_DIR=$JENKINS_HOME/workspace/$APP_NAME/jswy-bpm
 
 WORKDIR $WORK_DIR
-COPY target/$APP_NAME.jar $WORK_DIR/app.jar
+COPY target/*.jar $WORK_DIR/app.jar
 #容器对外暴露的9099端口
 EXPOSE 9099
 ENTRYPOINT ["java","-jar","/app.jar"]
